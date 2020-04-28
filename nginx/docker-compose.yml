@@ -16,6 +16,7 @@ services:
     container_name: ssl-companion
     volumes:
       - /var/docker/nginx/ssl:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     volumes_from:
       - proxy
     depends_on:
