@@ -1,13 +1,13 @@
 version: '2'
 services:
-  db:
+  mariadb:
     image: 'bitnami/mariadb:latest'
   blog:
     image: 'bitnami/ghost:latest'
     expose:
       - '2368'
     depends_on:
-      - db
+      - mariadb
     environment:
       - VIRTUAL_HOST=sub.domain.tld
       - LETSENCRYPT_HOST=sub.domain.tld
