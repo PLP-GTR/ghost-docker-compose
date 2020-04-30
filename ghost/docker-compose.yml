@@ -2,6 +2,13 @@ version: '2'
 services:
   mariadb:
     image: 'bitnami/mariadb:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_ghost
+      - MARIADB_PASSWORD=
+      - MARIADB_DATABASE=bitnami_ghost
+    volumes:
+      - /var/docker/ghost/mariadb-persistence:/bitnami
   blog:
     image: 'bitnami/ghost:latest'
     expose:
@@ -12,3 +19,8 @@ services:
       - VIRTUAL_HOST=sub.domain.tld
       - LETSENCRYPT_HOST=sub.domain.tld
       - LETSENCRYPT_EMAIL=your.email@example.com
+      - ALLOW_EMPTY_PASSWORD=yes
+      - GHOST_DATABASE_USER=bn_ghost
+      - GHOST_DATABASE_NAME=bitnami_ghost
+    volumes:
+      - /var/docker/ghost/ghost-persistence:/bitnami
