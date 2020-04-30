@@ -22,6 +22,7 @@ services:
       - LETSENCRYPT_EMAIL=your.email@example.com
       - ALLOW_EMPTY_PASSWORD=yes
       - GHOST_DATABASE_USER=bn_ghost
+      - GHOST_DATABASE_PASSWORD=
       - GHOST_DATABASE_NAME=bitnami_ghost
     volumes:
       - /var/docker/ghost/ghost-persistence:/bitnami
