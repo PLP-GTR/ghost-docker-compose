@@ -8,6 +8,8 @@ Following the guide _"Hosting a Ghost blog with NGINX and Docker"_ from Alistair
 
 ### Problems I came across
 
+#### SSL companion
+
 Setting up the ssl companion like this:
 
 ```
@@ -24,3 +26,16 @@ Left me with the error:\
 `ssl-companion | Error: you need to share your Docker host socket with a volume at /var/run/docker.sock`.\
 As suggested [here](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion/issues/87#issuecomment-235324412) I've added the volume:\
 `/var/run/docker.sock:/var/run/docker.sock:ro`
+
+#### Maria DB
+
+I came across this error: `db_1    | mkdir: cannot create directory '/bitnami/mariadb': Permission denied`
+Using this volume:
+
+```
+    volumes:
+      - /var/docker/ghost/mariadb-persistence:/bitnami
+```
+
+So I've ran `/var/docker/ghost$ sudo chmod -R 777 mariadb-persistence/`.
+
