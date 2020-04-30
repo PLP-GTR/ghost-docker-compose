@@ -3,6 +3,7 @@ services:
   mariadb:
     image: 'bitnami/mariadb:latest'
     environment:
+      - HOSTNAME=mariadb
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_USER=bn_ghost
       - MARIADB_PASSWORD=
