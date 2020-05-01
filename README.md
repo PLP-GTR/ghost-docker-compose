@@ -183,3 +183,36 @@ networks:
   nginx_web:
     external: true
 ```
+
+I took down both the nginx- and ghost-setup via `docker-compose down` and booted them up again with `docker-compose up`.
+
+### Ghost
+
+#### Unable to login
+
+So now was the first time I was able to visit the landing page. Unfortunately I could not login at `staging.3rdlevel.2ndlevel.tld/ghost`. No registration showed up, either. Maybe - at some point - the initial passwort of the unknown auto-generated admin user was shown but I missed it. Since I wanted to keep the initial setup, I decided to just set a new password to the admin user, following [this guide](https://lengerrong.blogspot.com/2017/10/reset-user-password-for-your-own-ghost.html):
+
+* Get the database container name via `$ docker ps`
+* Get a shell inside the container: `$ docker exec -it ghost_mariadb_1 /bin/bash`
+* Access the datatabse: `mysql -u bn_ghost -p` and enter the password, defined in the `docker-compose.yml` as `MARIADB_PASSWORD`
+* Switch to the `MARIADB_DATABASE`: `> use bitnami_ghost;`
+* _Optional: To have a quick overview of the DB, I usually want to see all tables via `> show tables;`_
+* As we can see, we have a `users` table, so: `> select * from users;`
+* Two users with the following emails are defined in my case: `user@example.com` and `ghost-author@example.com`
+* Now create a new password string over here: http://bcrypthashgenerator.apphb.com/
+* Set the new password via:\
+`> update users set password='$2b$10$qwBTvVowrGyrYwPCK3CNKe482C/19XgPreTcpwU/sEjFA6Ra1G/TG' where email='user@example.com';`
+* My login page now said, that I've tried to login too many times. Having seen the tables, I noticed the `brute` table. Flushing it made it possible to login:
+`> delete from brute;`
+
+After the login worked, make sure to set yourself a new password. Also set a new password to the other, automatically created user
+
+----
+
+So, now - I think I'm ready to test the software itself now.\
+I still need to
+- fix the permissions on the host system - maybe via a pre-executed docker-compose script
+- get the docker-compose config files as light-weight as possible
+- switch to more fixed versions of the images to avoid complications on updates
+- write down the update procedures or at least link to how-to's
+- add backup mechanisms to another machine
