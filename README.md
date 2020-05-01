@@ -192,7 +192,7 @@ I took down both the nginx- and ghost-setup via `docker-compose down` and booted
 
 So now was the first time I was able to visit the landing page. Unfortunately I could not login at `staging.3rdlevel.2ndlevel.tld/ghost`. No registration showed up, either. Maybe - at some point - the initial passwort of the unknown auto-generated admin user was shown but I missed it. Since I wanted to keep the initial setup, I decided to just set a new password to the admin user, following [this guide](https://lengerrong.blogspot.com/2017/10/reset-user-password-for-your-own-ghost.html):
 
-* Get the database container name via `$ docker ps`
+* Get the database container name via `$ docker ps`, in my case `ghost_mariadb_1`
 * Get a shell inside the container: `$ docker exec -it ghost_mariadb_1 /bin/bash`
 * Access the datatabse: `mysql -u bn_ghost -p` and enter the password, defined in the `docker-compose.yml` as `MARIADB_PASSWORD`
 * Switch to the `MARIADB_DATABASE`: `> use bitnami_ghost;`
@@ -206,6 +206,19 @@ So now was the first time I was able to visit the landing page. Unfortunately I 
 `> delete from brute;`
 
 After the login worked, make sure to set yourself a new password. Also set a new password to the other, automatically created user
+
+#### Docker IP as URL
+
+The ghost admin backend was showing the local docker IP as URL, for example `http://172.28.0.4/tag/getting-started/` at Settings → Design and also in article links or as hint text in input fields. 
+
+To change this for the whole application I've followed [these steps](https://ghost.org/faq/change-configured-site-url/):
+* Get the blog container name via `$ docker ps`, in my case `ghost_blog_1`
+* Get a shell inside the container: `$ docker exec -it ghost_blog_1 /bin/bash`
+* The ghost CLI should be available: `$ ghost --version` (i.e. `Ghost-CLI version: 1.13.1`)
+* Set your URL via: `$ ghost config url https://some.blog.2ndlevel.tld`
+* Restart ghost via `$ ghost restart`
+
+Now check the backend by refreshing the Settings → Design page. The IPs should be replaced by your URL.
 
 ----
 
