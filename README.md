@@ -35,7 +35,7 @@ After ghost was running (as docker said), I couldn't access it via registered do
 ```
 ssl-companion    | 2020-04-30 15:32:35,816:ERROR:simp_le:1417: CA marked some of the authorizations as invalid, which likely means it could not access http://example.com/.well-known/acme-challenge/X. Did you set correct path in -d example.com:path or --default_root? Are all your domains accessible from the internet? Please check your domains' DNS entries, your host's network/firewall setup and your webserver config. If a domain's DNS entry has both A and AAAA fields set up, some CAs such as Let's Encrypt will perform the challenge validation over IPv6. If your DNS provider does not answer correctly to CAA records request, Let's Encrypt won't issue a certificate for your domain (see https://letsencrypt.org/docs/caa/). Failing authorizations: https://acme-v02.api.letsencrypt.org/acme/authz-v3/4276342995
 ```
-Well... obviously, since I couldn't ping the new domain and neither could some online service. I've added the subdomain some days ago, so it should be accessible. This might fix itself, though.
+Well... obviously, since I couldn't ping the new domain and neither could some online service. I've added the subdomain some days ago, so it should be accessible. But now I've discovered, that the second-level-domain had a different name server attached. I thought this would not have any effect, but sure it did. After adding the 4th level domain to this service, the DNS is working correctly. The domain is currently `staging.3rdlevel.2ndlevel.tld` shaped.
 
 ### Maria DB
 
