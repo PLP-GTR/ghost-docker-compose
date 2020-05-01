@@ -133,3 +133,15 @@ blog_1     |
 blog_1     |     http://172.20.0.3/ghost/
 ```
 
+### Nginx
+
+#### No live upstreams
+
+After all the above problems where fixed, trying to access the domain lead to:
+```
+nginx-proxy      | nginx.1    | 2020/05/01 18:47:55 [error] 175#175: *44 no live upstreams while connecting to upstream, client: 188.xxx.xxx.xxx, server: staging.3rdlevel.2ndlevel.tld, request: "GET / HTTP/2.0", upstream: "http://staging.3rdlevel.2ndlevel.tld/", host: "staging.3rdlevel.2ndlevel.tld"
+```
+
+Checking the nginx config in the container tells me, that the exposed port of ghost, in my case `2368` seems not to be used.\
+Config location: `/etc/nginx/conf.d/default.conf`.\
+As of the guide, which states that _By default, the config will point at the only port that the blog service exposes: 2368_ it should work. I have to investigate why a) nginx is not automatically using the port or b) where I have to tell him.
