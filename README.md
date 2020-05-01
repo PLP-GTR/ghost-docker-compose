@@ -96,7 +96,7 @@ mariadb_1  | 2020-04-30 15:12:07 23 [Warning] Aborted connection 23 to db: 'bitn
 mariadb_1  | 2020-04-30 15:12:07 30 [Warning] Aborted connection 30 to db: 'bitnami_ghost' user: 'bn_ghost' host: '172.19.0.3' (Got an error reading communication packets)
 mariadb_1  | 2020-04-30 15:12:07 29 [Warning] Aborted connection 29 to db: 'bitnami_ghost' user: 'bn_ghost' host: '172.19.0.3' (Got an error reading communication packets)
 ```
-_Not fixed yet._
+_Not fixed yet._ **UPDATE:** The errors did not show up again but I think I force-recreated the containers in the meantime. I guess some not completed setup process might have caused this.
 
 #### Directory permission denied
 
