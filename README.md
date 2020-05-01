@@ -144,4 +144,42 @@ nginx-proxy      | nginx.1    | 2020/05/01 18:47:55 [error] 175#175: *44 no live
 
 Checking the nginx config in the container tells me, that the exposed port of ghost, in my case `2368` seems not to be used.\
 Config location: `/etc/nginx/conf.d/default.conf`.\
-As of the guide, which states that _By default, the config will point at the only port that the blog service exposes: 2368_ it should work. I have to investigate why a) nginx is not automatically using the port or b) where I have to tell him.
+As of the guide, which states that _By default, the config will point at the only port that the blog service exposes: 2368_ it should work.
+
+As of my investigation, this problem seems to be caused by multiple different networks. I've now defined the `web` network at the nginx' `docker-compose.yml`:
+
+```
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    [...]
+    networks:
+      - web
+      
+[...]
+
+networks:
+  web:
+    driver: bridge
+```
+
+Unfortunately, it seems that docker does not allow simple networks. According to [this stackoverflow answer](https://stackoverflow.com/a/38089080/2414736), I have to prefix the network wherever I want to use it again and define it as external network. I have done this over at the `docker-compose.yml` of ghost and mariadb:
+
+```
+version: '2'
+services:
+  mariadb:
+    image: 'bitnami/mariadb:latest'
+    [...]
+    networks:
+      - nginx_web
+  blog:
+    image: 'bitnami/ghost:latest'
+    [...]
+    networks:
+      - nginx_web
+
+networks:
+  nginx_web:
+    external: true
+```
