@@ -10,6 +10,8 @@ services:
       - MARIADB_DATABASE=bitnami_ghost
     volumes:
       - /var/docker/ghost/mariadb-persistence:/bitnami
+    networks:
+      - nginx_web
   blog:
     image: 'bitnami/ghost:latest'
     expose:
@@ -26,3 +28,9 @@ services:
       - GHOST_DATABASE_NAME=bitnami_ghost
     volumes:
       - /var/docker/ghost/ghost-persistence:/bitnami
+    networks:
+      - nginx_web
+
+networks:
+  nginx_web:
+    external: true

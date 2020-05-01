@@ -11,6 +11,8 @@ services:
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
       - /var/docker/nginx/ssl:/etc/nginx/certs:ro
+    networks:
+      - web
   ssl-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: ssl-companion
@@ -21,3 +23,7 @@ services:
       - proxy
     depends_on:
       - proxy
+
+networks:
+  web:
+    driver: bridge
