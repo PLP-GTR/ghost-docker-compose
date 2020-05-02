@@ -100,7 +100,7 @@ _Not fixed yet._ **UPDATE:** The errors did not show up again but I think I forc
 
 #### Directory permission denied
 
-Some time after the initialization and the abroted connection warnings, this one came up:\
+Some time after the initialization and the aborted connection warnings, this one came up:\
 `blog_1     | Error executing 'postInstallation': EACCES: permission denied, mkdir '/bitnami/ghost'`
 
 So I've granted too many permissions to the persistence volume mount:\
@@ -227,5 +227,5 @@ I still need to
 - fix the permissions on the host system - maybe via a pre-executed docker-compose script
 - get the docker-compose config files as light-weight as possible
 - switch to more fixed versions of the images to avoid complications on updates
-- write down the update procedures or at least link to how-to's
-- add backup mechanisms to another machine
+- write down the update procedures or at least link to how-to's, see [here](https://github.com/bitnami/bitnami-docker-ghost#upgrade-this-application)
+- add backup mechanisms to another machine, also see [here](https://github.com/bitnami/bitnami-docker-ghost#upgrade-this-application)
