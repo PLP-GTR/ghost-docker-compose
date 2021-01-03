@@ -1,9 +1,9 @@
-### How to update Ghost
+# How to update Ghost
 
 Link to bitnami ghost docs: https://github.com/bitnami/bitnami-docker-ghost#upgrade-this-application<br/>
 Link to ghost docs: https://ghost.org/docs/update/
 
-Step I
+## Step I
 
 Backup the content by going to the admin area (/ghost) -> Labs -> Export your content.
 Now backup the ghost persistance content:
@@ -19,7 +19,7 @@ You can also transfer the snapshot via scp to your machine, current directory:
     scp hal:content_backup.tar.gz .
     
 
-Step II
+## Step II
 
 Let's follow bitnami upgrade steps:
 
@@ -43,7 +43,7 @@ Let's follow bitnami upgrade steps:
     
     @hal:/var/docker/ghost$ docker-compose up
     
-### Following problems...
+## Following problems...
 
 1)
 
